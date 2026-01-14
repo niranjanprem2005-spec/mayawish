@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="referrer" content="no-referrer">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Maya ✨</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Pacifico&family=Handlee&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <style>
+        :root {
+            --bg-color: #f8faff;
+            --maya-purple: #8E44AD; 
+            --hbd-blue: #7fb3d5;
+        }
+
+        body {
+            margin: 0; padding: 0;
+            background-color: var(--bg-color);
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* --- LIGHTBOX --- */
+        #lightbox {
+            display: none; position: fixed; z-index: 9999;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.9); justify-content: center; align-items: center;
+        }
+        #lightbox img { max-width: 95%; max-height: 95%; object-fit: contain; }
+
+        /* --- PAGE 1: WELCOME --- */
+        #page1 {
+            min-height: 100vh; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; padding: 20px;
+        }
+
+        .welcome-card {
+            background: white; padding: 40px; border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(142, 68, 173, 0.1);
+            max-width: 500px; width: 100%; text-align: center;
+        }
+
+        .bts-logo { width: 70px; fill: var(--maya-purple); margin-bottom: 15px; }
+        .hbd-font { font-family: 'Oswald', sans-serif; text-transform: uppercase; color: var(--hbd-blue); font-size: 2rem; }
+        .maya-font { font-family: 'Pacifico', cursive; color: var(--maya-purple); font-size: 3.2rem; margin: 10px 0; display: block; }
+
+        .featured-photo {
+            margin: 25px 0; cursor: pointer;
+            width: 100%; max-width: 400px;
+            /* High-clarity rendering */
+            image-rendering: -webkit-optimize-contrast;
+        }
+        .featured-photo img { 
+            width: 100%; height: auto; 
+            display: block; border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .open-btn {
+            background-color: var(--maya-purple); color: white; border: none;
+            padding: 16px 45px; border-radius: 50px; font-size: 1.1rem;
+            cursor: pointer; font-weight: bold; transition: 0.3s;
+        }
+
+        /* --- PAGE 2: SCRAPBOOK --- */
+        #page2 {
+            display: none; flex-direction: column; align-items: center; padding: 40px 10px;
+        }
+
+        /* Changed to Flex to prevent absolute-position cropping */
+        .image-cluster {
+            display: flex; flex-wrap: wrap; justify-content: center;
+            align-items: center; gap: 20px; width: 100%;
+            max-width: 1100px; margin: 40px 0;
+        }
+
+        .letter-container {
+            background: white; width: 100%; max-width: 650px;
+            padding: 60px 40px; border-radius: 15px;
+            box-shadow: 0 10px 50px rgba(0,0,0,0.05); text-align: center;
+            margin: 20px 0;
+        }
+
+        /* The Sticker - No White Borders */
+        .sticker {
+            cursor: pointer; transition: 0.4s;
+            /* Using dynamic width but let height follow ratio */
+            flex: 0 1 auto;
+        }
+        .sticker img { 
+            width: 100%; max-height: 250px; /* Limits size but keeps ratio */
+            width: auto; height: auto;
+            display: block; 
+            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.15));
+        }
+
+        /* Custom rotations for the "Toss" look */
+        .rot-left { transform: rotate(-6deg); }
+        .rot-right { transform: rotate(6deg); }
+        .sticker:hover { transform: scale(1.1) rotate(0deg) !important; z-index: 10; }
+
+        .wish-text { line-height: 1.8; font-size: 1.15rem; color: #444; }
+        .signature { margin-top: 40px; text-align: right; font-family: 'Pacifico', cursive; font-size: 1.8rem; color: var(--maya-purple); }
+
+        .fade-in { display: flex !important; animation: fadeIn 0.8s forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+
+    <div id="lightbox" onclick="this.style.display='none'">
+        <img id="lb-img" src="">
+    </div>
+
+    <!-- PAGE 1 -->
+    <div id="page1">
+        <div class="welcome-card">
+            <svg class="bts-logo" viewBox="0 0 100 100"><path d="M20 10 L45 15 L45 85 L20 90 Z M55 15 L80 10 L80 90 L55 85 Z" /></svg>
+            <span class="hbd-font">Happy Birthday</span>
+            <span class="maya-font">Maya</span>
+            
+            <div class="featured-photo" onclick="viewFull('https://i.ibb.co/xSMWtbfc/image.png')">
+                <img src="https://i.ibb.co/xSMWtbfc/image.png" alt="Featured Image">
+            </div>
+
+            <button class="open-btn" onclick="openLetter()">View My Message</button>
+        </div>
+    </div>
+
+    <!-- PAGE 2 -->
+    <div id="page2">
+        
+        <!-- TOP CLUSTER (High Res Direct Links) -->
+        <div class="image-cluster">
+            <div class="sticker rot-left" onclick="viewFull('https://i.ibb.co/hJHSF3q1/image.png')"><img src="https://i.ibb.co/hJHSF3q1/image.png" style="width:160px"></div>
+            <div class="sticker rot-right" onclick="viewFull('https://i.ibb.co/v4ktCsW0/image.png')"><img src="https://i.ibb.co/v4ktCsW0/image.png" style="width:130px"></div>
+            <div class="sticker rot-left" onclick="viewFull('https://i.ibb.co/WN02DH2L/image.png')"><img src="https://i.ibb.co/WN02DH2L/image.png" style="width:150px"></div>
+            <div class="sticker rot-right" onclick="viewFull('https://i.ibb.co/wN2Y6ZLW/image.png')"><img src="https://i.ibb.co/wN2Y6ZLW/image.png" style="width:140px"></div>
+            <div class="sticker rot-left" onclick="viewFull('https://i.ibb.co/R44bxTr8/image.png')"><img src="https://i.ibb.co/R44bxTr8/image.png" style="width:160px"></div>
+            <div class="sticker rot-right" onclick="viewFull('https://i.ibb.co/60tZfS14/image.png')"><img src="https://i.ibb.co/60tZfS14/image.png" style="width:130px"></div>
+            <div class="sticker rot-left" onclick="viewFull('https://i.ibb.co/7dFKm26G/image.png')"><img src="https://i.ibb.co/7dFKm26G/image.png" style="width:150px"></div>
+            <div class="sticker rot-right" onclick="viewFull('https://i.ibb.co/84rc5mR6/image.png')"><img src="https://i.ibb.co/84rc5mR6/image.png" style="width:140px"></div>
+        </div>
+
+        <div class="letter-container">
+            <div class="wish-text">
+                <h1 style="margin-top: 0;">
+                    <span class="hbd-font" style="font-size: 1.6rem;">Happy Birthday</span>
+                    <span class="maya-font" style="font-size: 2.2rem;">Maya!</span>
+                </h1>
+                <p>
+                    I wanted to put together a little something for you to celebrate your day. I know how much you love these characters and BTS, so I thought they should definitely be a part of your birthday surprise.
+                    <br><br>
+                    Getting to know you has been such a wonderful experience. You have an amazing personality and a way of making every conversation brighter. I really value the time we spend together and the person you are.
+                    <br><br>
+                    On your special day, I hope you're surrounded by all the things that make you smile. Whether you're listening to your favorite tracks, catching up on your shows, or just taking a well-deserved break, I hope every moment is filled with happiness.
+                    <br><br>
+                    You deserve the very best this year and always. Enjoy your day to the fullest!
+                </p>
+                <div class="signature">Best wishes, <br> Niranjan</div>
+            </div>
+        </div>
+
+        <!-- BOTTOM CLUSTER -->
+        <div class="image-cluster">
+            <div class="sticker rot-right" onclick="viewFull('https://i.ibb.co/pv5Ppwpn/image.png')"><img src="https://i.ibb.co/pv5Ppwpn/image.png" style="width:150px"></div>
+            <div class="sticker rot-left" onclick="viewFull('https://i.ibb.co/tMKdLZkS/image.png')"><img src="https://i.ibb.co/tMKdLZkS/image.png" style="width:140px"></div>
+            <div class="sticker rot-right" onclick="viewFull('https://i.ibb.co/ycNDyMKY/image.png')"><img src="https://i.ibb.co/ycNDyMKY/image.png" style="width:160px"></div>
+            <div class="sticker rot-left" onclick="viewFull('https://i.ibb.co/67zFCsT9/image.png')"><img src="https://i.ibb.co/67zFCsT9/image.png" style="width:130px"></div>
+            <div class="sticker rot-right" onclick="viewFull('https://i.ibb.co/V0TgX4rw/image.png')"><img src="https://i.ibb.co/V0TgX4rw/image.png" style="width:150px"></div>
+            <div class="sticker rot-left" onclick="viewFull('https://i.ibb.co/VWHRY5Tx/image.png')"><img src="https://i.ibb.co/VWHRY5Tx/image.png" style="width:140px"></div>
+            <div class="sticker rot-right" onclick="viewFull('https://i.ibb.co/1fdwZx8Z/image.png')"><img src="https://i.ibb.co/1fdwZx8Z/image.png" style="width:160px"></div>
+            <div class="sticker rot-left" onclick="viewFull('https://i.ibb.co/qLVshSJn/image.png')"><img src="https://i.ibb.co/qLVshSJn/image.png" style="width:130px"></div>
+            <div class="sticker rot-right" onclick="viewFull('https://i.ibb.co/1GJhyKYG/image.png')"><img src="https://i.ibb.co/1GJhyKYG/image.png" style="width:150px"></div>
+        </div>
+
+    </div>
+
+    <script>
+        function viewFull(url) {
+            const lb = document.getElementById('lightbox');
+            document.getElementById('lb-img').src = url;
+            lb.style.display = 'flex';
+        }
+
+        function openLetter() {
+            var end = Date.now() + (2 * 1000);
+            (function frame() {
+              confetti({ particleCount: 4, angle: 60, spread: 55, origin: { x: 0 }, colors: ['#8E44AD', '#7fb3d5'] });
+              confetti({ particleCount: 4, angle: 120, spread: 55, origin: { x: 1 }, colors: ['#8E44AD', '#7fb3d5'] });
+              if (Date.now() < end) { requestAnimationFrame(frame); }
+            }());
+            document.getElementById('page1').style.display = 'none';
+            document.getElementById('page2').classList.add('fade-in');
+            window.scrollTo(0, 0);
+        }
+    </script>
+</body>
+</html>
